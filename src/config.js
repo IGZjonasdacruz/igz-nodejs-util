@@ -11,7 +11,7 @@ var config = {};
 function loadConfigs (filenames) {
 	var i, len, configPath, configJson;
 	for (i = 0, len = filenames.length; i < len; i++) {
-		configPath = '../../config/' + filenames[i] + '.json';
+		configPath = filenames[i];
 		configJson = require(configPath);
 		addValuesToConfig(configJson)
 		debug('Configuration loaded: "' + filename + '"');
