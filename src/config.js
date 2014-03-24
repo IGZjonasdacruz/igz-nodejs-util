@@ -1,3 +1,4 @@
+var path = require('path');
 var debug = require('debug')('i60-config');
 var filename = process.env.CONFIG;
 
@@ -11,10 +12,10 @@ var config = {};
 function loadConfigs (filenames) {
 	var i, len, configPath, configJson;
 	for (i = 0, len = filenames.length; i < len; i++) {
-		configPath = filenames[i];
+		configPath = path.join(process.cwd(), '/../config/' + filenames[i] + '.json');
 		configJson = require(configPath);
 		addValuesToConfig(configJson)
-		debug('Configuration loaded: "' + filename + '"');
+		debug('Configuration loaded: "' + configPath + '"');
 	}
 }
 
