@@ -22,7 +22,29 @@ function deleteAll (collectionName, callback) {
 			callback({name:'Dao Error', message: 'deleteAll is only enabled with CONFIG="local" or CONFIG="test"'});
 		}
 	});
-};
+}
+
+function drop (collectionName, callback) {
+	mongodb(function(err, db) {
+		if (err) {
+			return callback(err);
+		}
+
+		if ( process.env.CONFIG === 'local' || process.env.CONFIG === 'test' ) {
+			
+			debug('Drop "' + collectionName + '"');
+
+			db.collection(collectionName).drop(function(err, results) {
+				if (err) {
+					return callback(err);
+				}
+				callback();
+			});
+		} else {
+			callback({name:'Dao Error', message: 'drop is only enabled with CONFIG="local" or CONFIG="test"'});
+		}
+	});
+}
 
 function get (collectionName, criteria, options, callback) {
 	mongodb(function(err, db) {
@@ -164,6 +186,7 @@ function getCursor(collectionName, callback){
 
 module.exports = {
 	deleteAll: deleteAll,
+	drop: drop,
 	get: get,
 	getByIds: getByIds,
 	insert: insert,
@@ -173,4 +196,5 @@ module.exports = {
 	setById: setById,
 	ensureIndex:ensureIndex,
 	getCursor:getCursor
-}
+};
+
