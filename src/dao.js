@@ -110,6 +110,24 @@ function getByIds (collectionName, ids, fields, options, callback) {
 	});
 }
 
+function getById (collectionName, id, callback) {
+	mongodb(function(err, db) {
+		if (err) {
+			return callback(err, null);
+		}
+
+		if ( typeof id === 'string' ) {
+			try {
+				id = new ObjectID(id);
+			} catch (err) {
+				return callback({name: 'Dao Error', message: 'invalid id format'}, null);
+			}
+		}
+
+		db.collection(collectionName).findOne({_id: id}, callback);
+	});
+}
+
 /**
  * Find the doc by 'id' and set all fields defined in 'data'.
  * Callback returns the doc updated or error if the doc not exists.
@@ -188,6 +206,7 @@ module.exports = {
 	deleteAll: deleteAll,
 	drop: drop,
 	get: get,
+	getById: getById,
 	getByIds: getByIds,
 	insert: insert,
 	update: update,
@@ -197,4 +216,3 @@ module.exports = {
 	ensureIndex:ensureIndex,
 	getCursor:getCursor
 };
-
