@@ -1,6 +1,6 @@
 {
   "name": "igz-util",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "IGZ Utils for NodeJS",
   "private": "true",
   "main": "./src/igz-util",
